@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+  
+<div id="content">
+
+  <div id="content-header">
+    <div id="breadcrumb"> <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <i class="icon-inbox"></i> EC2 List</div>
+  </div>
+
+ {% for vpc in  resources %}
+
+ {% for subnet in vpc.subnets %}
+
+ {% for instance in subnet.instances %}
+<div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+            <h5>{{ instance.instance_name }}</h5>
+            <span class="label label-info">{{ vpc.vpc_name }}</span> <span class="label label-success">{{ subnet.subnet_name }}</span> 
+           </div>
+          <div class="widget-content">
+            <table class="table table-bordered table-striped with-check">
+              <thead>
+                <tr>
+                  <th><div class="checker" id="uniform-title-table-checkbox"><span><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" style="opacity: 0;"></span></div></th>
+                  <th><span class="label label-warning">Security Group - Egress</span></th>
+                  <th>From Port</th>
+                  <th>To Port</th>
+
+                </tr>
+              </thead>
+              <tbody>
+
+              {% for egress in instance.sg_egress %}
+                <tr>
+                  <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                  <td>{% for ips in egress.IpRanges %} {% if ips.CidrIp == '0.0.0.0/0' %} <span class="label label-important" style="font-size:18px"> {{ ips.CidrIp }} </span> {% else %}  {{ ips.CidrIp }}  {% endif %} {% endfor %}
+						{% for ips in egress.UserIdGroupPairs %} {{ ips.GroupId }} {% endfor %}
+                  		</td>
+                  <td>{{ egress.FromPort }}</td>
+                  <td>{{ egress.ToPort }}</td>
+                  
+                </tr>
+               {% endfor %}
+
+               </tbody>
+               <thead>
+                <tr>
+                  <th><div class="checker" id="uniform-title-table-checkbox"><span><input type="checkbox" id="title-table-checkbox" name="title-table-checkbox" style="opacity: 0;"></span></div></th>
+                  <th><span class="label label-success">Security Group - Ingress</span></th>
+                  <th>From Port</th>
+                  <th>To Port</th>
+     
+                </tr>
+              </thead>
+               <tbody>
+
+               {% for ingress in instance.sg_ingress %}
+                <tr>
+                  <td><div class="checker" id="uniform-undefined"><span><input type="checkbox" style="opacity: 0;"></span></div></td>
+                  <td>{% for ips in ingress.IpRanges %} {% if ips.CidrIp == '0.0.0.0/0' %} <span class="label label-important" style="font-size:18px"> {{ ips.CidrIp }} </span> {% else %}  {{ ips.CidrIp }}  {% endif %} {% endfor %}
+						{% for ips in ingress.UserIdGroupPairs %} {{ ips.GroupId }} {% endfor %}
+                  		</td>
+                  <td>{{ ingress.FromPort }}</td>
+                  <td>{{ ingress.ToPort }}</td>
+                  
+                </tr>
+               {% endfor %}
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+  {% endfor %}
+    {% endfor %}
+      {% endfor %}
+
+
+</div>
+
+
+{% endblock %}
