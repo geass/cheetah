@@ -2,11 +2,11 @@ Cheetah v1.0
 ==============
 
 * [News](#news)
-    * [Say Hello to Cheetah](#cheetah)
+    * [Say Hello to Cheetah](#say-hello-to-cheetah)
 * [Installation](#installation)
-    * [How to run Cheetah ? ](#how-to-run)
+    * [How to run Cheetah ?](#how-to-run-cheetah-)
 * [Future Steps](#future-steps)
-    * [Dashboard for cheetah](#dashboard)
+    * [Dashboard for cheetah](#dashboard-for-cheetah)
   
 
 ## News
